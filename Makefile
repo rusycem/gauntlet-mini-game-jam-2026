@@ -17,7 +17,7 @@ CXX      := g++
 CXXFLAGS := -Wall -Wextra -Werror -std=c++17
 
 # List EVERY .cpp file here! I added Player.cpp
-SRCS := main.cpp Player.cpp
+SRCS := main.cpp Player.cpp FallingItem.cpp
 OBJS := $(SRCS:.cpp=.o)
 
 # make / make all: build the binary
