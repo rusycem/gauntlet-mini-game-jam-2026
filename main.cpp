@@ -25,7 +25,10 @@ int main() {
     InitWindow(screenWidth, screenHeight, "Nasi Lemak Drop");
     SetTargetFPS(60);
 
-    std::unique_ptr<Player> leaf = std::make_unique<Player>(screenWidth / 2.0f - 60.0f, screenHeight - 40.0f);
+    Texture2D playerTex = LoadTexture("nasi_lemak.png");
+    Texture2D chiliTex = LoadTexture("chili.png");
+
+    std::unique_ptr<Player> leaf = std::make_unique<Player>(screenWidth / 2.0f - 60.0f, screenHeight - 60.0f, playerTex);
     
     // vector container
     std::vector<std::unique_ptr<FallingItem>> items;
@@ -44,7 +47,7 @@ int main() {
             spawnTimer += GetFrameTime();
             if (spawnTimer >= 0.8f) {
                 float randomX = static_cast<float>(GetRandomValue(10, screenWidth - 30));
-                items.push_back(std::make_unique<FallingItem>(randomX, -20.0f, 250.0f, RED));
+                items.push_back(std::make_unique<FallingItem>(randomX, -20.0f, 250.0f, chiliTex));
                 spawnTimer = 0.0f;
             }
 
@@ -82,7 +85,7 @@ int main() {
                 score = 0;
                 lives = 3;
                 items.clear();
-                leaf = std::make_unique<Player>(screenWidth / 2.0f - 60.0f, screenHeight - 40.0f);
+                leaf = std::make_unique<Player>(screenWidth / 2.0f - 60.0f, screenHeight - 60.0f, playerTex);
             }
         }
 
@@ -108,6 +111,9 @@ int main() {
         
         EndDrawing();
     }
+
+    UnloadTexture(playerTex);
+    UnloadTexture(chiliTex);
 
     CloseWindow();
     return 0;

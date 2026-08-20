@@ -7,10 +7,11 @@ private:
     float width, height;
     float speed;
     Color color;
+    Texture2D sprite;
     bool active; 
 
 public:
-    FallingItem(float startX, float startY, float fallSpeed, Color itemColor);
+    FallingItem(float startX, float startY, float fallSpeed, Texture2D texture);
     
     void update() override;
     void draw() const override;

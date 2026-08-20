@@ -6,9 +6,10 @@ private:
     float x, y;
     float width, height;
     float speed;
+    Texture2D sprite;
 
 public:
-    Player(float startX, float startY);
+    Player(float startX, float startY, Texture2D texture);
     
     void update() override;
     void draw() const override;
