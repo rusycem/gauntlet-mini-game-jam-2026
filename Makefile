@@ -1,33 +1,44 @@
 # The binary this exercise builds
-NAME := hello
+NAME := game
+
+# Automatically detect OS
+ifeq ($(OS),Windows_NT)
+    EXT := .exe
+    DEL := cmd /c del /q /f
+    LDFLAGS := -lraylib -lgdi32 -lwinmm
+else
+    EXT :=
+    DEL := rm -f
+    LDFLAGS := -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
+endif
 
 # Compiler and the gauntlet's mandatory flags
-CXX := g++
+CXX      := g++
 CXXFLAGS := -Wall -Wextra -Werror -std=c++17
 
-# List every .cpp file in the exercise here
-SRCS := main.cpp
+# List EVERY .cpp file here! I added Player.cpp
+SRCS := main.cpp Player.cpp
 OBJS := $(SRCS:.cpp=.o)
 
-# `make` / `make all`: build the binary
-all: $(NAME).exe
+# make / make all: build the binary
+all: $(NAME)$(EXT)
 
-$(NAME).exe: $(OBJS)
-	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME).exe
+$(NAME)$(EXT): $(OBJS)
+	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)$(EXT) $(LDFLAGS)
 
 # Compile each .cpp into a .o
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# `make clean`: remove object files
+# make clean: remove object files
 clean:
-	cmd /c del /q /f $(OBJS)
+	$(DEL) $(OBJS)
 
-# `make fclean`: remove objects AND the binary
+# make fclean: remove objects AND the binary
 fclean: clean
-	cmd /c del /q /f $(NAME).exe
+	$(DEL) $(NAME)$(EXT)
 
-# `make re`: rebuild everything from scratch
+# make re: rebuild everything from scratch
 re: fclean all
 
 .PHONY: all clean fclean re
